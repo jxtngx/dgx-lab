@@ -1,0 +1,37 @@
+---
+description: DGX Lab design system — tokens, type roles, density, and color usage
+alwaysApply: true
+---
+
+# DGX Lab Design System
+
+Lab-dashboard density. Cyan is earned. No marketing chrome.
+
+## Color tokens
+
+| Token | Value | Use |
+|-------|-------|-----|
+| `--background` | `#09090b` | Page base |
+| `--surface` | `#0f0f12` | Sidebar, panels |
+| `--elevated` | `#161619` | Cards, inputs |
+| `--hover` | `#1c1c21` | Hover states |
+| `--active` | `#24242b` | Active/pressed states |
+| `--border` | `#222230` | Primary borders |
+| `--border-subtle` | `#1a1a24` | Subtle separators |
+| `--text-secondary` | `#8b8993` | Secondary text |
+| `--text-tertiary` | `#5a5868` | Labels, hints |
+| `--text-dim` | `#3a3848` | Disabled, decorative |
+| `--color-cyan` | `#22d3ee` | Primary accent — active states, live status, critical links only |
+| `--color-amber` | `#f59e0b` | Warnings |
+| `--color-red` | `#ef4444` | Errors, destructive |
+| `--color-blue` | `#60a5fa` | Running/in-progress |
+| `--color-purple` | `#a78bfa` | Agents, LoRA |
+
+## Rules
+
+- **Cyan is scarce.** Active nav items, live-status dots, top-level metrics. Never as background fill or decoration.
+- **No NVIDIA green** (`#76b900`). Trademarked brand color.
+- **Monospace** (`font-mono` / JetBrains Mono) for: model IDs, file paths, metrics, data cells, token counts, memory values.
+- **Sans** (Instrument Sans) for: headings, nav labels, body prose, buttons.
+- **Density:** 4px base grid. Data text 11-13px. Body 13-14px. Avoid padding > 16px on data surfaces.
+- **Motion:** `fade-up` for mount, `pulse-dot` for live states only. No parallax, scroll hijack, or scale-on-hover.

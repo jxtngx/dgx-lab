@@ -1,0 +1,51 @@
+---
+description: Backend router conventions for FastAPI tool routers
+globs: backend/app/routers/*.py
+alwaysApply: false
+---
+
+# Backend Router Conventions
+
+Every router in `backend/app/routers/` follows the same shape. Match it exactly when adding or modifying routers.
+
+## Structure
+
+```python
+from __future__ import annotations
+from fastapi import APIRouter
+from app import config
+
+router = APIRouter()
+```
+
+- Import `config` for all paths and hardware constants — never hardcode `128`, `273`, or `~/.dgx-lab/`.
+- Use `logging.getLogger(__name__)` for structured logging.
+- Use `threading.Thread(daemon=True)` for background work (downloads, jobs). Track state in a module-level dict with a `threading.Lock` if writes are concurrent.
+
+## Endpoint patterns
+
+| Pattern | Convention |
+|---------|-----------|
+| List | `GET /` or `GET /models` — return a list of dicts |
+| Detail | `GET /{id:path}` — catch-all routes go **last** in the file |
+| Search | `GET /search?q=...&limit=20` — `Query(..., min_length=1)` |
+| Create/Action | `POST /pull`, `POST /query` — use a Pydantic `BaseModel` for the request body |
+| Delete | `DELETE /{id:path}` — return `{"status": "ok", ...}` |
+| Background status | `GET /downloads` or `GET /jobs` — return dict keyed by ID with `status` field |
+
+## Data contracts
+
+- Return plain dicts/lists — no Pydantic response models needed for reads.
+- Use Pydantic `BaseModel` for request bodies (`PullRequest`, `QueryRequest`).
+- Sizes: `_bytes_to_gb(b)` → `round(b / (1024**3), 2)`. Use `_bytes_to_mb` for datasets.
+- Status values: `"downloading"`, `"complete"`, `"error"`, `"interrupted"`, `"running"`, `"queued"`.
+
+## Registration
+
+Register in `app/main.py`:
+
+```python
+app.include_router(thing.router, prefix="/api/thing", tags=["thing"])
+```
+
+The prefix is always `/api/<tool-name>`. The tag matches the tool name.

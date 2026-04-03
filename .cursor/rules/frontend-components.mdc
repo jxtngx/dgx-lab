@@ -1,0 +1,48 @@
+---
+description: Frontend component and page conventions for the Next.js app
+globs: frontend/apps/web/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend Conventions
+
+## Page structure
+
+Tool pages live at `app/(tools)/<tool>/page.tsx`. Each is `"use client"` and follows this shape:
+
+1. Fetch data with `useFetch<T>("/tool/endpoint")` (one-shot) or `usePoll<T>("/tool/endpoint", intervalMs)` (live).
+2. Local state for selection, search query, view mode.
+3. Render: toolbar header → content area → optional detail panel or sheet.
+
+## Data fetching
+
+| Hook | When |
+|------|------|
+| `useFetch` | Data loaded once on mount, with `refetch()` for manual refresh |
+| `usePoll` | Live data (GPU status, download progress) — polls at `intervalMs` |
+
+Both use `api<T>(path)` from `lib/api.ts`. Paths are relative to `/api/` (e.g. `"/control/models"`).
+
+## Styling
+
+- Use CSS custom properties via inline `style={{ }}` for all DGX Lab design tokens (`--background`, `--surface`, `--elevated`, `--border`, `--border-subtle`, `--text-secondary`, `--text-tertiary`, `--color-cyan`, etc.).
+- Tailwind for layout, spacing, and typography sizing (`flex`, `gap-3`, `text-[13px]`, `font-mono`).
+- No Tailwind color classes — all color through CSS vars.
+- Monospace (`font-mono`) for data values, model IDs, file paths, metrics. Sans for labels, headings, navigation.
+
+## Component patterns
+
+- Sheets (`@workspace/ui` `Sheet`) for pull/create actions that slide in from the right.
+- Detail panels as a `<aside>` with `--surface` background and left border.
+- Status dots: 5-6px rounded div, cyan = complete/connected, blue = running (pulse), amber = warning, red = error.
+- Dense tables: no `<table>` — use CSS grid with `grid-template-columns` for alignment.
+
+## Sidebar
+
+New tools go in `components/app-sidebar.tsx` in the `sections` array:
+
+```typescript
+{ href: "/tool", label: "Tool Name", icon: "◇" }
+```
+
+Optional tools add `optional: true` and `settingsKey: "tool-key"`.

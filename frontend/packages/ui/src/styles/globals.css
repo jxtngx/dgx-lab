@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+@source "../../../apps/**/*.{ts,tsx}";
+@source "../../../components/**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+    --font-sans: var(--font-sans);
+
+    --color-surface: var(--surface);
+    --color-elevated: var(--elevated);
+    --color-hover: var(--hover);
+    --color-active: var(--active);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-tertiary: var(--text-tertiary);
+    --color-text-dim: var(--text-dim);
+    --color-border-subtle: var(--border-subtle);
+
+    --color-cyan: #22d3ee;
+    --color-cyan-dim: rgba(34, 211, 238, 0.125);
+    --color-amber: #f59e0b;
+    --color-amber-dim: rgba(245, 158, 11, 0.135);
+    --color-red: #ef4444;
+    --color-red-dim: rgba(239, 68, 68, 0.135);
+    --color-blue: #60a5fa;
+    --color-blue-dim: rgba(96, 165, 250, 0.135);
+    --color-purple: #a78bfa;
+    --color-purple-dim: rgba(167, 139, 250, 0.135);
+    --color-teal: #2dd4bf;
+    --color-teal-dim: rgba(45, 212, 191, 0.135);
+    --color-rose: #fb7185;
+    --color-orange: #fb923c;
+}
+
+:root {
+    --background: #09090b;
+    --foreground: #e8e6e3;
+    --card: #0f0f12;
+    --card-foreground: #e8e6e3;
+    --popover: #161619;
+    --popover-foreground: #e8e6e3;
+    --primary: #22d3ee;
+    --primary-foreground: #000000;
+    --secondary: #161619;
+    --secondary-foreground: #8b8993;
+    --muted: #161619;
+    --muted-foreground: #5a5868;
+    --accent: #1c1c21;
+    --accent-foreground: #e8e6e3;
+    --destructive: #ef4444;
+    --border: #222230;
+    --border-subtle: #1a1a24;
+    --input: #161619;
+    --ring: #22d3ee;
+    --chart-1: #22d3ee;
+    --chart-2: #60a5fa;
+    --chart-3: #f59e0b;
+    --chart-4: #a78bfa;
+    --chart-5: #2dd4bf;
+    --radius: 0.625rem;
+
+    --surface: #0f0f12;
+    --elevated: #161619;
+    --hover: #1c1c21;
+    --active: #24242b;
+    --text-secondary: #8b8993;
+    --text-tertiary: #5a5868;
+    --text-dim: #3a3848;
+
+    --sidebar: #0f0f12;
+    --sidebar-foreground: #e8e6e3;
+    --sidebar-primary: #22d3ee;
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: rgba(34, 211, 238, 0.125);
+    --sidebar-accent-foreground: #22d3ee;
+    --sidebar-border: #222230;
+    --sidebar-ring: #22d3ee;
+}
+
+.dark {
+    --background: #09090b;
+    --foreground: #e8e6e3;
+    --card: #0f0f12;
+    --card-foreground: #e8e6e3;
+    --popover: #161619;
+    --popover-foreground: #e8e6e3;
+    --primary: #22d3ee;
+    --primary-foreground: #000000;
+    --secondary: #161619;
+    --secondary-foreground: #8b8993;
+    --muted: #161619;
+    --muted-foreground: #5a5868;
+    --accent: #1c1c21;
+    --accent-foreground: #e8e6e3;
+    --destructive: #ef4444;
+    --border: #222230;
+    --border-subtle: #1a1a24;
+    --input: #161619;
+    --ring: #22d3ee;
+    --chart-1: #22d3ee;
+    --chart-2: #60a5fa;
+    --chart-3: #f59e0b;
+    --chart-4: #a78bfa;
+    --chart-5: #2dd4bf;
+    --surface: #0f0f12;
+    --elevated: #161619;
+    --hover: #1c1c21;
+    --active: #24242b;
+    --text-secondary: #8b8993;
+    --text-tertiary: #5a5868;
+    --text-dim: #3a3848;
+    --sidebar: #0f0f12;
+    --sidebar-foreground: #e8e6e3;
+    --sidebar-primary: #22d3ee;
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: rgba(34, 211, 238, 0.125);
+    --sidebar-accent-foreground: #22d3ee;
+    --sidebar-border: #222230;
+    --sidebar-ring: #22d3ee;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--color-cyan); }
+  50% { opacity: 0.7; box-shadow: 0 0 8px 2px var(--color-cyan); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
