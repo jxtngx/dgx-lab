@@ -4,9 +4,9 @@ REGISTRY := ghcr.io/jxtngx/dgx-lab
 VERSION  ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 
 dev:
-	@trap 'kill 0' EXIT; \
-	cd backend && uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 & \
-	cd frontend && bun run dev & \
+	@trap 'kill -INT 0' EXIT; \
+	cd backend && uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 2>&1 | sed -u 's/^/[api] /' & \
+	cd frontend && bun run dev 2>&1 | sed -u 's/^/[web] /' & \
 	wait
 
 up:

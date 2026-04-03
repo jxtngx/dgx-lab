@@ -1,12 +1,22 @@
+import logging
 import os
 import pwd
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.logging_config import PollFilter
 from app.routers import agents, automodel, claude_agents, control, curator, datasets, designer, logger, monitor, traces
 
-app = FastAPI(title="DGX Lab", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logging.getLogger("uvicorn.access").addFilter(PollFilter())
+    yield
+
+
+app = FastAPI(title="DGX Lab", version="0.1.0", lifespan=lifespan)
 
 # Wide-open CORS is intentional. DGX Lab is self-hosted and local-only
 # (Mac browser → DGX Spark on the same LAN or Tailscale network).

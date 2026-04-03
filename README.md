@@ -4,6 +4,10 @@ Local-first developer dashboard for the NVIDIA DGX Spark.
 
 > **This project is built for DGX Spark hardware.** If you don't own a DGX Spark (GB10 Grace Blackwell, 128 GB unified memory), this repo is not useful to you. The tools assume Spark-local model storage, `nvidia-smi` access, and memory budgets specific to the GB10. There is no hosted version.
 
+<p align="center">
+  <img src="assets/screenshot.png" alt="DGX Lab screenshot" width="720" />
+</p>
+
 ## What it is
 
 Eight tools that run on your Spark and give you a single UI for the things you'd otherwise do across a dozen terminal windows:
