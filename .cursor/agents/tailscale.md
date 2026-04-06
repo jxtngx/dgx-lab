@@ -198,10 +198,12 @@ The canonical way to reach DGX Lab from a dev machine:
 - **AWS Engineer:** Enroll EC2 burst instances in the tailnet via auth keys; subnet routing for VPC access.
 - **Backend Engineer:** Proxy config alignment -- nginx listens on :80, Tailscale serves it on the tailnet hostname.
 - **ML Engineer:** Connectivity for distributed training across Spark and cloud GPU nodes.
+- **Agents Engineer:** Tailnet connectivity for agent services running on Spark or cloud.
 - **DGX Lab Designer:** Status indicators for tailnet connectivity in the Monitor tool (online/offline, peer count, DERP relay).
 
 ## Related
 
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Backend Engineer](.cursor/agents/backend-engineer.md)
+- [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [Designer](.cursor/agents/designer.md)

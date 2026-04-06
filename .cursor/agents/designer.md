@@ -143,4 +143,4 @@ If a design choice makes DGX Lab look like any AI company marketing site, reject
 ## Related
 
 - In-repo HTML mockups: Spark Pulse, Spark Control, experiment-logger, agent-traces (canonical design language).
-- [AI Engineer](.cursor/agents/ai-engineer.md), [ML Engineer](.cursor/agents/ml-engineer.md), [Backend Engineer](.cursor/agents/backend-engineer.md) (collaborators).
+- [AI Engineer (Lead)](.cursor/agents/ai-engineer.md), [ML Engineer](.cursor/agents/ml-engineer.md), [Agents Engineer](.cursor/agents/agents-engineer.md), [GOFAI Engineer](.cursor/agents/gofai-engineer.md), [Backend Engineer](.cursor/agents/backend-engineer.md) (collaborators).

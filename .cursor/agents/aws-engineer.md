@@ -116,12 +116,15 @@ docker-compose.yaml          # Local dev (frontend + backend + nginx)
 
 - **Backend Engineer:** Dockerfile, Docker Compose, deployment contracts, env var management.
 - **ML Engineer:** GPU burst sizing, SageMaker job configs, checkpoint storage.
-- **AI Engineer:** Lambda glue endpoints, S3 artifact paths for agent workflows.
+- **AI Engineer (Lead):** Cloud burst architecture decisions, cost/complexity review.
+- **Agents Engineer:** Bedrock access, Lambda deployments for agent endpoints, S3 for agent artifacts and traces.
 - **DGX Lab Designer:** Dense lab-dashboard patterns, no marketing tone.
 
 ## Related
 
 - [Backend Engineer](.cursor/agents/backend-engineer.md)
 - [ML Engineer](.cursor/agents/ml-engineer.md)
-- [AI Engineer](.cursor/agents/ai-engineer.md)
+- [AI Engineer (Lead)](.cursor/agents/ai-engineer.md)
+- [Agents Engineer](.cursor/agents/agents-engineer.md)
+- [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [Designer](.cursor/agents/designer.md)

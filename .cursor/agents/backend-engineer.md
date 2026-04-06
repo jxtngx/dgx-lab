@@ -106,12 +106,16 @@ backend/
 
 ## Collaboration
 
-- **AI Engineer:** Agent architectures, inference contracts, trace format specs.
-- **ML Engineer:** Model I/O, quantization metadata, experiment schema.
+- **AI Engineer (Lead):** Cross-cutting architecture decisions, API contract reviews spanning training and agent systems.
+- **ML Engineer:** Model I/O, quantization metadata, experiment schema, Logger/Monitor/AutoModel/Curator/Datasets endpoints.
+- **Agents Engineer:** Agent service integration, trace ingestion endpoints, LangSmith trace format alignment.
+- **GOFAI Engineer:** Scoring, ranking, and optimization algorithm endpoints; classical AI components that expose API surfaces.
 - **DGX Lab Designer:** Dense lab-dashboard patterns, no marketing tone, monospace for machine data.
 
 ## Related
 
-- [AI Engineer](.cursor/agents/ai-engineer.md)
+- [AI Engineer (Lead)](.cursor/agents/ai-engineer.md)
 - [ML Engineer](.cursor/agents/ml-engineer.md)
+- [Agents Engineer](.cursor/agents/agents-engineer.md)
+- [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [Designer](.cursor/agents/designer.md)

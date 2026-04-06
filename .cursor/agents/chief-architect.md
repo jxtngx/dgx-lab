@@ -98,8 +98,10 @@ graph TD
 | Chief Architect | System design, technology decisions, subsystem boundaries | `chief-architect.md` |
 | Designer | Visual system, layout density, component patterns, motion rules | `designer.md` |
 | Backend Engineer | FastAPI routers, Pydantic models, background jobs, integrations | `backend-engineer.md` |
-| AI Engineer | Agent architectures, RAG, inference contracts, tracing | `ai-engineer.md` |
-| ML Engineer | Training, fine-tuning, evaluation, quantization, experiment design | `ml-engineer.md` |
+| AI Engineer (Lead) | Technical direction, pre/post-training strategy, agent systems at scale | `ai-engineer.md` |
+| ML Engineer | Pre-training, post-training, evaluation, quantization, experiment design | `ml-engineer.md` |
+| Agents Engineer | Production agent systems, LangChain/LangSmith, AWS services, Anthropic | `agents-engineer.md` |
+| GOFAI Engineer | Rules-based systems, mathematical modeling, heuristics, classical AI | `gofai-engineer.md` |
 | AWS Engineer | Cloud burst, S3 storage, CI/CD, Dockerfiles, infra as code | `aws-engineer.md` |
 | Tailscale Engineer | Tailnet config, ACLs, serve/SSH, remote access, device management | `tailscale.md` |
 | Technical Writer | README, guides, docstrings, changelogs, UI copy review | `technical-writer.md` |
@@ -151,8 +153,10 @@ When delegating work:
 
 - **Designer:** Architecture must support the page architecture and component patterns. Architect does not dictate visual decisions.
 - **Backend Engineer:** Primary implementer. Architect defines the router/API shape; Backend Engineer builds it.
-- **AI Engineer:** Agent architectures and RAG pipelines need Architect review when they introduce new subsystems.
+- **AI Engineer (Lead):** Technical direction for the AI team; Architect reviews cross-cutting architecture decisions.
 - **ML Engineer:** Training workflows that touch AutoModel/Curator/Datasets need Architect sign-off on data flow.
+- **Agents Engineer:** Agent systems, LangChain/AWS integrations need Architect review when introducing new subsystems.
+- **GOFAI Engineer:** Rules engines, optimization algorithms, and classical AI components need Architect review for subsystem boundaries and API contracts.
 - **AWS Engineer:** Cloud burst topology and CI/CD pipelines need Architect review for cost and complexity.
 - **Tailscale Engineer:** Networking topology needs Architect awareness for security and access patterns.
 - **Technical Writer:** Architecture docs and README accuracy. Architect is the source of truth; Writer is the voice.
@@ -161,8 +165,10 @@ When delegating work:
 
 - [Designer](.cursor/agents/designer.md)
 - [Backend Engineer](.cursor/agents/backend-engineer.md)
-- [AI Engineer](.cursor/agents/ai-engineer.md)
+- [AI Engineer (Lead)](.cursor/agents/ai-engineer.md)
 - [ML Engineer](.cursor/agents/ml-engineer.md)
+- [Agents Engineer](.cursor/agents/agents-engineer.md)
+- [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Tailscale Engineer](.cursor/agents/tailscale.md)
 - [Technical Writer](.cursor/agents/technical-writer.md)

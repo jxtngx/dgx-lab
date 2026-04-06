@@ -144,8 +144,10 @@ Apache 2.0
 
 - **Designer:** Tone alignment -- the writer and the designer share the same editorial stance. Dense, lab-first, no marketing.
 - **Backend Engineer:** Docstring coverage on routers, API contract documentation, endpoint examples.
-- **AI Engineer:** Agent architecture docs, trace format spec, prompt/tool schema documentation.
+- **AI Engineer (Lead):** Cross-team documentation strategy, architecture overview docs.
 - **ML Engineer:** Training workflow guides, memory estimation docs, experiment directory layout.
+- **Agents Engineer:** Agent architecture docs, trace format spec, LangChain/LangSmith usage guides.
+- **GOFAI Engineer:** Algorithm documentation, heuristic parameter guides, rules engine specifications.
 - **AWS Engineer:** Deployment guides, infra architecture docs.
 - **Tailscale Engineer:** Remote access setup guide, ACL documentation.
 
@@ -153,7 +155,9 @@ Apache 2.0
 
 - [Designer](.cursor/agents/designer.md) (editorial stance alignment)
 - [Backend Engineer](.cursor/agents/backend-engineer.md)
-- [AI Engineer](.cursor/agents/ai-engineer.md)
+- [AI Engineer (Lead)](.cursor/agents/ai-engineer.md)
 - [ML Engineer](.cursor/agents/ml-engineer.md)
+- [Agents Engineer](.cursor/agents/agents-engineer.md)
+- [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Tailscale Engineer](.cursor/agents/tailscale.md)
