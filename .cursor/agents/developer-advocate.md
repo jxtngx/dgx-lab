@@ -99,3 +99,4 @@ DGX Spark owners and GPU developers who:
 - [Technical Writer](.cursor/agents/technical-writer.md)
 - [Designer](.cursor/agents/designer.md)
 - [Tailscale Engineer](.cursor/agents/tailscale.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)

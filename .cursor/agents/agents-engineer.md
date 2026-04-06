@@ -123,3 +123,4 @@ Always read the relevant skill before writing code. The skills contain the curre
 - [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Designer](.cursor/agents/designer.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)

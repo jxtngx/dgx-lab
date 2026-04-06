@@ -207,3 +207,4 @@ The canonical way to reach DGX Lab from a dev machine:
 - [Backend Engineer](.cursor/agents/backend-engineer.md)
 - [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [Designer](.cursor/agents/designer.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)

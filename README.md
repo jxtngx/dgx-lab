@@ -184,7 +184,7 @@ dgx-lab/
 
 ## Maintainer tooling
 
-DGX Lab is built and maintained with [Cursor](https://cursor.com/) and [Anthropic](https://anthropic.com/) Claude as core development agents. The `.cursor/agents/` directory contains 11 specialized agent definitions (Chief Architect, Designer, Backend Engineer, AI Engineer, ML Engineer, Agents Engineer, GOFAI Engineer, AWS Engineer, Tailscale Engineer, Technical Writer, Developer Advocate) that encode project conventions, subsystem boundaries, and the DGX Lab design system. They are the persistent context that keeps contributions aligned without a style guide someone has to remember to read. The Developer Advocate agent is there to help anyone who clones or forks the repo get oriented, troubleshoot setup, and understand the architecture well enough to work independently.
+DGX Lab is built and maintained with [Cursor](https://cursor.com/) and [Anthropic](https://anthropic.com/) Claude as core development agents. The `.cursor/agents/` directory contains 12 specialized agent definitions (Chief Architect, Scrum Master, Designer, Backend Engineer, AI Engineer, ML Engineer, Agents Engineer, GOFAI Engineer, AWS Engineer, Tailscale Engineer, Technical Writer, Developer Advocate) that encode project conventions, subsystem boundaries, and the DGX Lab design system. They are the persistent context that keeps contributions aligned without a style guide someone has to remember to read. The Developer Advocate agent is there to help anyone who clones or forks the repo get oriented, troubleshoot setup, and understand the architecture well enough to work independently.
 
 ## Resources
 

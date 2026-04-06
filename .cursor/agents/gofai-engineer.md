@@ -102,3 +102,4 @@ graph TD
 - [Agents Engineer](.cursor/agents/agents-engineer.md)
 - [Backend Engineer](.cursor/agents/backend-engineer.md)
 - [Designer](.cursor/agents/designer.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)

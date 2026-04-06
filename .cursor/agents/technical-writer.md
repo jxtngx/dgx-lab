@@ -161,3 +161,4 @@ Apache 2.0
 - [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Tailscale Engineer](.cursor/agents/tailscale.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)

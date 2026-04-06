@@ -105,6 +105,8 @@ graph TD
 | AWS Engineer | Cloud burst, S3 storage, CI/CD, Dockerfiles, infra as code | `aws-engineer.md` |
 | Tailscale Engineer | Tailnet config, ACLs, serve/SSH, remote access, device management | `tailscale.md` |
 | Technical Writer | README, guides, docstrings, changelogs, UI copy review | `technical-writer.md` |
+| Developer Advocate | Onboarding, troubleshooting, architecture explanation for external users | `developer-advocate.md` |
+| Scrum Master | Sprint ceremonies, backlog health, flow and velocity, blocker removal | `scrum-master.md` |
 
 ## Responsibilities
 
@@ -160,6 +162,7 @@ When delegating work:
 - **AWS Engineer:** Cloud burst topology and CI/CD pipelines need Architect review for cost and complexity.
 - **Tailscale Engineer:** Networking topology needs Architect awareness for security and access patterns.
 - **Technical Writer:** Architecture docs and README accuracy. Architect is the source of truth; Writer is the voice.
+- **Scrum Master:** Priority alignment, cross-cutting work sequencing, blocker escalation. Architect owns what gets built; Scrum Master owns how work flows.
 
 ## Related
 
@@ -172,3 +175,5 @@ When delegating work:
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Tailscale Engineer](.cursor/agents/tailscale.md)
 - [Technical Writer](.cursor/agents/technical-writer.md)
+- [Developer Advocate](.cursor/agents/developer-advocate.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)

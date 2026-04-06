@@ -119,3 +119,4 @@ backend/
 - [Agents Engineer](.cursor/agents/agents-engineer.md)
 - [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [Designer](.cursor/agents/designer.md)
+- [Scrum Master](.cursor/agents/scrum-master.md)
