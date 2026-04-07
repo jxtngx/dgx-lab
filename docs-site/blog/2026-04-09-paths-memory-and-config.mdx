@@ -1,0 +1,70 @@
+---
+title: "Paths, memory constants, and config"
+slug: 2026-04-09-paths-memory-and-config
+authors: [jxtngx]
+tags: [spark, gpu, backend]
+description: "Every default directory and env var DGX Lab uses for models, experiments, traces, agent index, and LangSmith exports — plus the two knobs that size the 128 GB story."
+---
+
+import ConfigEnvGroupsChart from '@site/src/components/blog/ConfigEnvGroupsChart';
+import MemoryConstantsBars from '@site/src/components/blog/MemoryConstantsBars';
+import MemoryBudgetChart from '@site/src/components/blog/MemoryBudgetChart';
+
+Tools in DGX Lab assume **local disk** and **Spark-class memory**. Defaults match a stock DGX Spark layout; everything below can be overridden with environment variables read in `backend/app/config.py`.
+
+{/* truncate */}
+
+<ConfigEnvGroupsChart />
+
+## Model and experiment data
+
+| Default path | Env var | Consumers |
+|--------------|---------|-----------|
+| `~/.cache/huggingface/hub` | `DGX_LAB_MODELS_DIR` | Control — cache scan, Hub pull, memory fit |
+| `~/.dgx-lab/experiments` | `DGX_LAB_EXPERIMENTS_DIR` | Logger — SQLite / Parquet / JSONL metrics |
+| `~/.dgx-lab/traces` | `DGX_LAB_TRACES_DIR` | Traces tool — JSONL agent traces |
+| `~/.dgx-lab/designer` | `DGX_LAB_DESIGNER_DIR` | Designer — generated output |
+| `~/.data-designer` | `DATA_DESIGNER_HOME` | Designer library config (`model_providers.yaml`, `model_configs.yaml`; owned by `data-designer`) |
+| `~/.dgx-lab/curator` | `DGX_LAB_CURATOR_DIR` | Curator pipelines and job state |
+| `~/.dgx-lab/datasets` | `DGX_LAB_DATASETS_DIR` | Datasets browser — local staging |
+
+If a directory does not exist yet, create it or run the tool that populates it — the backend does not magically scaffold all of these on first boot.
+
+## Agent, transcripts, and LangSmith
+
+These paths support the in-dashboard agent, RAG index, and trace export — they are easy to miss if you only read the “eight tools” table.
+
+| Default path | Env var | Role |
+|--------------|---------|------|
+| `~/.cursor/projects/<slug>/agent-transcripts` (when present) else `~/.dgx-lab/agent-transcripts` | `DGX_LAB_AGENT_TRANSCRIPTS_DIR` | Cursor agent transcript ingestion |
+| `~/.claude/projects` | `DGX_LAB_CLAUDE_TRANSCRIPTS_DIR` | Claude project transcripts |
+| `~/.dgx-lab/langsmith-traces` | `DGX_LAB_LANGSMITH_TRACES_DIR` | LangSmith trace JSONL landing zone |
+| `~/.dgx-lab/agent` | `DGX_LAB_AGENT_INDEX_DIR` | Embeddings / vector index backing RAG |
+| Current working directory of the process | `DGX_LAB_CODEBASE_ROOT` | Codebase root for indexing and context |
+
+Set these explicitly when you run multiple clones, store caches on another volume, or keep transcripts in a non-default Cursor layout.
+
+## Memory display constants
+
+Unified memory on the Spark is **128 GB** with a **~273 GB/s** bandwidth ceiling in product messaging. DGX Lab uses those numbers for gauges and “fit” math unless you override:
+
+| Env var | Default | Purpose |
+|---------|---------|---------|
+| `DGX_LAB_MEMORY_TOTAL_GB` | `128` | Total pool for UI bars and estimates |
+| `DGX_LAB_MEMORY_BW_MAX_GBS` | `273` | Upper bound for bandwidth visualization |
+
+If you run the same codebase on different hardware (not the intended case, but possible), adjust these so the UI does not lie about headroom.
+
+<MemoryConstantsBars />
+
+The same constants feed the **memory fit** story in Control: a typical 70B Q4 load against the 128 GB pool looks like the breakdown below (illustrative segments — your cache and workload will differ).
+
+<MemoryBudgetChart />
+
+## Why this matters
+
+- **Control** and **Monitor** tie directly to GPU visibility and cache paths — wrong `DGX_LAB_MODELS_DIR` means an empty library or wrong sizes.
+- **Logger** / **Traces** / **Datasets** are pure filesystem contracts — if the path is wrong, the UI is empty, not “broken.”
+- **Agent** behavior depends on `DGX_LAB_CODEBASE_ROOT` and index dir — a mismatched root indexes the wrong tree.
+
+Link related reading: [Introducing DGX Lab](/blog/2026-04-07-introducing-dgx-lab) for architecture context; repo `README.md` duplicates the high-level table for quick grep.

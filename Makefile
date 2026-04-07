@@ -1,7 +1,11 @@
-.PHONY: dev up down build logs rebuild release push
+.PHONY: dev up down build logs rebuild release push docs
 
 REGISTRY := ghcr.io/jxtngx/dgx-lab
 VERSION  ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
+
+# Docusaurus on :3001 with baseUrl /docs/ — open http://localhost:3000/docs while `make dev` runs (Next proxies /docs).
+docs:
+	cd docs-site && bun run start
 
 dev:
 	@trap 'kill -INT 0' EXIT; \

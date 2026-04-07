@@ -1,0 +1,75 @@
+name: deploy docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs-site/**"
+      - "backend/**"
+      - "frontend/**"
+      - "scripts/docs/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install griffe
+        run: pip install griffe>=1.7.2
+
+      - name: Generate API docs
+        run: python scripts/docs/generate_api_docs.py
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install docs-site dependencies
+        run: bun install --frozen-lockfile
+        working-directory: docs-site
+
+      - name: Install frontend dependencies
+        run: bun install --frozen-lockfile
+        working-directory: frontend
+
+      - name: Generate frontend docs
+        run: bun run generate:frontend
+        working-directory: docs-site
+
+      - name: Build Docusaurus
+        env:
+          DOCUSAURUS_BASE_URL: /dgx-lab/
+        run: bun run build
+        working-directory: docs-site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-site/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

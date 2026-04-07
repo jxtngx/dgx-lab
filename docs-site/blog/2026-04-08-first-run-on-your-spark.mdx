@@ -1,0 +1,84 @@
+---
+title: "First run on your Spark"
+slug: 2026-04-08-first-run-on-your-spark
+authors: [jxtngx]
+tags: [devex, spark, backend]
+description: "Clone, install with uv and Bun, run `make dev`, and know what to check when something breaks — without expecting a support queue."
+---
+
+import DevProdPortsChart from '@site/src/components/blog/DevProdPortsChart';
+
+DGX Lab expects to run **on** the DGX Spark (or at least on a box where `nvidia-smi` and your model cache match how the tools query the system). This is not a hosted product: you clone, you run, you own the outcome.
+
+{/* truncate */}
+
+## Prerequisites
+
+| Requirement | Notes |
+|-------------|--------|
+| Python 3.12+ | Backend is pinned to a modern CPython; use `uv` to match lockfile. |
+| [uv](https://docs.astral.sh/uv/) | Installs and syncs `backend/pyproject.toml` + `uv.lock`. |
+| [Bun](https://bun.sh/) 1.3+ | Frontend monorepo and `make dev` use Bun workspaces. |
+| Docker + Compose | Only for `make build` / `make up` production-style runs. |
+
+If you are following along from a laptop that is **not** the Spark, you still need the repo **on the Spark** for GPU-backed tools and local paths. SSH in, clone there, open the UI from the Spark browser or from your Mac via LAN/Tailscale (see the [remote access](/blog/2026-04-10-remote-access-lan-tailscale-ssh) post).
+
+## Install
+
+From the repo root on the machine that will host the app:
+
+```bash
+git clone https://github.com/jxtngx/dgx-lab.git ~/dgx-lab
+cd ~/dgx-lab
+
+cd backend && uv sync && cd ..
+cd frontend && bun install && cd ..
+```
+
+`uv sync` respects `backend/uv.lock`. `bun install` uses the workspace `package.json` under `frontend/`.
+
+## Development
+
+```bash
+make dev
+```
+
+That brings up **FastAPI on port 8000** and **Next.js on port 3000**. The dev frontend proxies `/api/*` to the backend, so you usually open:
+
+```text
+http://localhost:3000
+```
+
+From another device on the same LAN, use the Spark’s IP: `http://<spark-ip>:3000`.
+
+<DevProdPortsChart />
+
+## Production-style Docker
+
+```bash
+make build
+make up
+```
+
+nginx listens on **port 80** and routes `/` to the frontend container and `/api/` to FastAPI. Use `make down`, `make rebuild`, and `make logs` as needed; the README summarizes each target.
+
+## When something fails
+
+| Symptom | Likely check |
+|---------|----------------|
+| Backend import errors | Re-run `cd backend && uv sync` after pulls; lockfile drift is the usual cause. |
+| Frontend won’t start | `cd frontend && bun install`; ensure Bun meets the minimum version. |
+| Monitor shows no GPU | Confirm `nvidia-smi` on the **host**. If you use Docker, the compose file must grant GPU to the backend container. |
+| Empty Control model list | Default model dir is `~/.cache/huggingface/hub`. Pull a model or set `DGX_LAB_MODELS_DIR`. |
+
+The [setup guide](/docs/setup) mirrors these steps. The codebase and `docs/` are the source of truth — there is no ticket queue.
+
+## Expectations
+
+Per `CONTRIBUTING.md`, this repo is a **personal project**: issues and PRs are not triaged. Forks are encouraged if you need different defaults or tools. The modular layout (one router per tool under `backend/app/routers/`, one route under `frontend/apps/web/app/(tools)/`) exists so you can adapt without waiting on a maintainer.
+
+```bash
+make dev
+```
+
+If that command succeeds and `http://localhost:3000` loads, you are past the hardest part.

@@ -1,0 +1,24 @@
+architecture:
+  label: Architecture
+  description: System design and component architecture
+gpu:
+  label: GPU
+  description: GPU programming, CUDA, and hardware
+ml:
+  label: ML
+  description: Machine learning, training, and evaluation
+agent:
+  label: Agent
+  description: Agent systems, RAG, and LangChain
+spark:
+  label: Spark
+  description: NVIDIA DGX Spark specific content
+frontend:
+  label: Frontend
+  description: Next.js, React, UI components
+backend:
+  label: Backend
+  description: FastAPI, Python, API design
+devex:
+  label: DevEx
+  description: Developer experience and tooling

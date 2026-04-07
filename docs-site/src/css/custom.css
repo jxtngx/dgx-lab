@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --ifm-color-primary: #0e9aaf;
+  --ifm-color-primary-dark: #0c8a9d;
+  --ifm-color-primary-darker: #0b8294;
+  --ifm-color-primary-darkest: #096b7a;
+  --ifm-color-primary-light: #10aac1;
+  --ifm-color-primary-lighter: #11b2ca;
+  --ifm-color-primary-lightest: #22d3ee;
+  --ifm-code-font-size: 90%;
+  --ifm-font-family-base: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', monospace;
+  --ifm-heading-font-weight: 700;
+  --ifm-font-weight-bold: 700;
+  --docusaurus-highlighted-code-line-bg: rgba(34, 211, 238, 0.08);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #22d3ee;
+  --ifm-color-primary-dark: #0ec4df;
+  --ifm-color-primary-darker: #0db9d3;
+  --ifm-color-primary-darkest: #0b98ae;
+  --ifm-color-primary-light: #42daf1;
+  --ifm-color-primary-lighter: #4eddf2;
+  --ifm-color-primary-lightest: #7ae6f5;
+  --ifm-background-color: #09090b;
+  --ifm-background-surface-color: #0f0f12;
+  --ifm-navbar-background-color: #0f0f12;
+  --ifm-footer-background-color: #0f0f12;
+  --ifm-toc-border-color: #222230;
+  --ifm-color-emphasis-300: #222230;
+  --ifm-hr-border-color: #1a1a24;
+  --docusaurus-highlighted-code-line-bg: rgba(34, 211, 238, 0.1);
+}
+
+[data-theme='dark'] .navbar {
+  border-bottom: 1px solid #1a1a24;
+}
+
+[data-theme='dark'] pre {
+  background-color: #161619 !important;
+  border: 1px solid #222230;
+}
+
+[data-theme='dark'] code {
+  background-color: #161619;
+  border-color: #222230;
+}
+
+[data-theme='dark'] .footer {
+  border-top: 1px solid #1a1a24;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
+}
+
+article code,
+td code,
+p code {
+  font-size: 0.85em;
+}

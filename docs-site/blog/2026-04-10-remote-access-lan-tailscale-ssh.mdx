@@ -1,0 +1,73 @@
+---
+title: "Remote access: LAN, Tailscale, SSH tunnel"
+slug: 2026-04-10-remote-access-lan-tailscale-ssh
+authors: [jxtngx]
+tags: [spark, devex, architecture]
+description: "How to reach DGX Lab from a Mac or another machine — same ports for dev vs Docker, plus Tailscale and SSH when you are off the LAN."
+---
+
+import RemoteAccessPortsChart from '@site/src/components/blog/RemoteAccessPortsChart';
+
+The app always runs **on the Spark**. Your browser can be on the Spark, on a laptop on the same Wi‑Fi, or on a machine joined to a tailnet. The only thing that changes is the URL and whether you need a tunnel.
+
+{/* truncate */}
+
+## Ports
+
+| Mode | URL on the Spark | From another host |
+|------|------------------|-------------------|
+| `make dev` | `http://localhost:3000` | `http://<spark-ip>:3000` |
+| Docker (`make up`) | `http://localhost` (port 80) | `http://<spark-ip>` |
+
+nginx in Docker terminates port 80 and proxies to the frontend and `/api/` to FastAPI. Dev mode skips nginx and exposes Next directly on **3000** and the API on **8000** (proxied by Next for browser calls).
+
+<RemoteAccessPortsChart />
+
+## Same LAN
+
+On the Spark:
+
+```bash
+hostname -I
+```
+
+Use the relevant address from your Mac or other client:
+
+```text
+http://<spark-ip>:3000    # development
+http://<spark-ip>         # Docker / nginx on :80
+```
+
+No extra software if routing and firewalls allow it.
+
+## Tailscale
+
+Install Tailscale on the Spark and on the client, authenticate both to the same tailnet, then use the Spark’s Tailscale hostname or IP from `tailscale status`:
+
+```text
+http://<spark-tailscale-hostname>:3000   # dev
+http://<spark-tailscale-hostname>        # production/docker
+```
+
+The README also describes `tailscale serve` for HTTPS-style URLs on your tailnet and `tailscale ssh` for shell access — useful when you need to restart `make dev` or inspect logs without physical access.
+
+## SSH local forward
+
+If Tailscale is not an option and you can SSH to the Spark:
+
+```bash
+# On your Mac or laptop
+ssh -L 3000:localhost:3000 -L 8000:localhost:8000 <user>@<spark-ip>
+```
+
+Then open `http://localhost:3000` locally. Keep the session open; when it drops, the tunnel drops.
+
+## Security posture (stated plainly)
+
+DGX Lab is meant for **private networks**. The backend uses permissive CORS because the expected clients are your own devices, not arbitrary internet origins. Do not expose port 80 or 3000 to the public internet without putting something in front that you trust.
+
+## Further reading
+
+- Repo guide: `docs/remote-access.md` (systemd example, same content family).
+- Architecture diagram and stack: [Introducing DGX Lab](/blog/2026-04-07-introducing-dgx-lab).
+- First-time setup: [First run on your Spark](/blog/2026-04-08-first-run-on-your-spark).
