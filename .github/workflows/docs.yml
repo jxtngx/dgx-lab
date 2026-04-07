@@ -48,9 +48,11 @@ jobs:
         run: bun install
         working-directory: frontend
 
+      - name: Install doc-gen dependencies
+        run: bun add --dev ts-morph glob
+
       - name: Generate frontend docs
-        run: bun run generate:frontend
-        working-directory: docs-site
+        run: bun run scripts/docs/generate_frontend_docs.ts
 
       - name: Build Docusaurus
         env:
