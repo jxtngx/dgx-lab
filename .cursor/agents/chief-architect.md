@@ -109,6 +109,7 @@ graph TD
 | Scrum Master | Sprint ceremonies, backlog health, flow and velocity, blocker removal | `scrum-master.md` |
 | DGX Spark Expert | Spark hardware, GB10 architecture, unified memory, CUDA, system diagnostics | `dgx-spark-expert.md` |
 | macOS Expert | Apple Silicon M5 Max, macOS tooling, Mac-to-Spark connectivity | `macos-expert.md` |
+| Frontend Engineer | Next.js app, shared UI, docs-site theme, build pipeline | `frontend-engineer.md` |
 
 ## Responsibilities
 
@@ -167,6 +168,7 @@ When delegating work:
 - **Scrum Master:** Priority alignment, cross-cutting work sequencing, blocker escalation. Architect owns what gets built; Scrum Master owns how work flows.
 - **DGX Spark Expert:** Hardware constraints that feed architecture decisions. Memory budgets, bandwidth ceilings, and CUDA capabilities shape every tool.
 - **macOS Expert:** Mac-side developer environment, Mac-to-Spark connectivity patterns, browser/client considerations.
+- **Frontend Engineer:** Primary implementer for Next.js app, shared UI, and docs-site theme. Architect defines page architecture; Frontend Engineer builds it.
 
 ## Related
 
@@ -183,3 +185,4 @@ When delegating work:
 - [Scrum Master](.cursor/agents/scrum-master.md)
 - [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
 - [macOS Expert](.cursor/agents/macos-expert.md)
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md)

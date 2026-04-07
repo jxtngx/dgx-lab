@@ -105,3 +105,4 @@ graph TD
 - [Scrum Master](.cursor/agents/scrum-master.md)
 - [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
 - [macOS Expert](.cursor/agents/macos-expert.md)
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md)

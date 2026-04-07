@@ -142,4 +142,5 @@ Multiple DGX Spark units can be connected via USB-C into a virtual cluster:
 - [Designer](.cursor/agents/designer.md)
 - [Developer Advocate](.cursor/agents/developer-advocate.md)
 - [Scrum Master](.cursor/agents/scrum-master.md)
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md)
 - [DGX Spark User Guide PDF](.cursor/context/dgx-spark.pdf)

@@ -59,6 +59,8 @@ Same as the rest of the agent team: DGX Spark owners and developers in the GPU M
 | API reference | FastAPI auto-docs + docstrings | Python docstrings |
 | Changelog | `CHANGELOG.md` | Keep a Changelog format |
 | Agent/rule docs | `.cursor/agents/*.md` | Markdown |
+| Blog posts | `docs-site/blog/` | MDX |
+| Docs site | `docs-site/docs/` | Markdown / MDX |
 
 ### Writing rules
 
@@ -69,6 +71,17 @@ Same as the rest of the agent team: DGX Spark owners and developers in the GPU M
 - **One heading per concept.** Don't nest deeper than H3 unless genuinely necessary.
 - **Link, don't repeat.** Reference other docs and agent files rather than duplicating content.
 - **Keep it current.** Docs that describe removed features or wrong paths are worse than no docs.
+
+### Blog standards
+
+Blog posts use **MDX** format (`.mdx` files in `docs-site/blog/`).
+
+- Posts can embed **TypeScript** components for interactive visuals.
+- Approved visualization libraries: **Recharts** (charts, metrics, timelines), **Three.js** via `@react-three/fiber` and `@react-three/drei` (3D hardware visualizations, architecture diagrams).
+- Blog components live in `docs-site/src/components/blog/` and are imported in MDX.
+- Frontmatter must include: `title`, `authors`, `tags` (from `tags.yml`), `description`.
+- Voice rules from the doc standards above apply -- no marketing filler, lead with substance.
+- Coordinate with the Frontend Engineer on component availability before referencing in a post.
 
 ### Docstring conventions
 
@@ -150,6 +163,7 @@ Apache 2.0
 - **GOFAI Engineer:** Algorithm documentation, heuristic parameter guides, rules engine specifications.
 - **AWS Engineer:** Deployment guides, infra architecture docs.
 - **Tailscale Engineer:** Remote access setup guide, ACL documentation.
+- **Frontend Engineer:** Blog MDX component availability, frontend API documentation, docs-site theme coordination.
 
 ## Related
 
@@ -164,3 +178,4 @@ Apache 2.0
 - [Scrum Master](.cursor/agents/scrum-master.md)
 - [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
 - [macOS Expert](.cursor/agents/macos-expert.md)
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md)

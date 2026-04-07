@@ -130,3 +130,4 @@ While DGX Lab targets CUDA on the Spark, the Mac's M5 Max can run local inferenc
 - [Developer Advocate](.cursor/agents/developer-advocate.md)
 - [Designer](.cursor/agents/designer.md)
 - [Scrum Master](.cursor/agents/scrum-master.md)
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md)

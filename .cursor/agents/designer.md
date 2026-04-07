@@ -133,7 +133,7 @@ Headings that include model names: model name in mono, remainder in sans.
 
 ## Collaboration
 
-- **Frontend Engineer:** Hand off patterns, tokens, and acceptance notes; review built UI against density and type rules.
+- **[Frontend Engineer](.cursor/agents/frontend-engineer.md):** Hand off patterns, tokens, and acceptance notes; review built UI against density and type rules. Primary collaborator for docs-site theming.
 - **Chief Architect / PM (if engaged):** Clarify information architecture when it affects multiple systems.
 
 ## Non-negotiable rule
@@ -143,4 +143,4 @@ If a design choice makes DGX Lab look like any AI company marketing site, reject
 ## Related
 
 - In-repo HTML mockups: Spark Pulse, Spark Control, experiment-logger, agent-traces (canonical design language).
-- [AI Engineer (Lead)](.cursor/agents/ai-engineer.md), [ML Engineer](.cursor/agents/ml-engineer.md), [Agents Engineer](.cursor/agents/agents-engineer.md), [GOFAI Engineer](.cursor/agents/gofai-engineer.md), [Backend Engineer](.cursor/agents/backend-engineer.md), [Scrum Master](.cursor/agents/scrum-master.md), [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md), [macOS Expert](.cursor/agents/macos-expert.md) (collaborators).
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md), [AI Engineer (Lead)](.cursor/agents/ai-engineer.md), [ML Engineer](.cursor/agents/ml-engineer.md), [Agents Engineer](.cursor/agents/agents-engineer.md), [GOFAI Engineer](.cursor/agents/gofai-engineer.md), [Backend Engineer](.cursor/agents/backend-engineer.md), [Scrum Master](.cursor/agents/scrum-master.md), [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md), [macOS Expert](.cursor/agents/macos-expert.md) (collaborators).

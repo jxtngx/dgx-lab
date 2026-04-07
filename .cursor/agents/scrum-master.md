@@ -152,3 +152,4 @@ The Scrum Master does not make technical decisions, but must understand the subs
 - [Developer Advocate](.cursor/agents/developer-advocate.md)
 - [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
 - [macOS Expert](.cursor/agents/macos-expert.md)
+- [Frontend Engineer](.cursor/agents/frontend-engineer.md)
