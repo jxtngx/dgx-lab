@@ -20,6 +20,8 @@ bun run dev
 
 The dev server starts on `http://localhost:3000` and proxies `/api/*` requests to the backend at `http://localhost:8000`.
 
+With the docs dev server running (`make docs` from the repo root, or `bun run start` in `docs-site/` on port **3001**), Next.js also proxies **`/docs`** to that server, so you open **`http://localhost:3000/docs`** (not `/dgx-lab/`). GitHub Pages builds still use the `/dgx-lab/` base path.
+
 ## Adding UI components
 
 ```bash

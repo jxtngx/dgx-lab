@@ -4,31 +4,31 @@ overview: Add a toggleable LangSmith Traces tool page (mirroring Cursor/Claude t
 todos:
   - id: langsmith-backend
     content: Create langsmith_traces.py router with dual-source (API + local JSONL) trace reading
-    status: pending
+    status: completed
   - id: langsmith-frontend
     content: Create LangSmith Traces page with runs/sessions/feedback tabs, three-panel layout
-    status: pending
+    status: completed
   - id: langsmith-wiring
     content: Wire LangSmith page into sidebar (optional toggle), settings defaults, layout toolNames, main.py registration
-    status: pending
+    status: completed
   - id: agent-rag
     content: "Build RAG pipeline: document loader (repo + agents + skills), splitter, FAISS index, local embeddings"
-    status: pending
+    status: completed
   - id: agent-chain
     content: Create LangChain agent with Bedrock Haiku 3.5, persona system prompt, RAG retrieval, LangSmith tracing
-    status: pending
+    status: completed
   - id: agent-chat-router
     content: Create agent_chat.py router with POST /chat, GET /conversations, conversation management
-    status: pending
+    status: completed
   - id: agent-sheet-ui
     content: Replace agent-sheet.tsx placeholder with working chat interface (messages, input, citations, persona pills)
-    status: pending
+    status: completed
   - id: agent-evals
     content: Set up LangSmith evaluation dataset and LLM-as-Judge evaluator for the agent
-    status: pending
+    status: completed
   - id: deps-config
     content: Add all dependencies to pyproject.toml, update config.py with new paths, update logging_config.py
-    status: pending
+    status: completed
 isProject: false
 ---
 

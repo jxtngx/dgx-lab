@@ -11,6 +11,8 @@ POLL_PATHS = {
     "/api/designer/jobs",
     "/api/automodel/jobs",
     "/api/health",
+    "/api/langsmith/status",
+    "/api/langsmith/sessions",
 }
 
 

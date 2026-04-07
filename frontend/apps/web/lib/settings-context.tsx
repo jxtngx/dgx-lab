@@ -12,6 +12,7 @@ const DEFAULTS: DgxLabSettings = {
   enabledTools: {
     "agent-viewer": false,
     "claude-traces": false,
+    "langsmith-traces": false,
   },
 }
 

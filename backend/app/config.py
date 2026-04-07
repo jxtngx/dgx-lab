@@ -26,5 +26,15 @@ CLAUDE_TRANSCRIPTS_DIR = Path(os.getenv(
     str(Path.home() / ".claude" / "projects"),
 ))
 
+LANGSMITH_TRACES_DIR = Path(os.getenv(
+    "DGX_LAB_LANGSMITH_TRACES_DIR",
+    str(Path.home() / ".dgx-lab" / "langsmith-traces"),
+))
+AGENT_INDEX_DIR = Path(os.getenv(
+    "DGX_LAB_AGENT_INDEX_DIR",
+    str(Path.home() / ".dgx-lab" / "agent"),
+))
+CODEBASE_ROOT = Path(os.getenv("DGX_LAB_CODEBASE_ROOT", str(Path.cwd())))
+
 MEMORY_TOTAL_GB = float(os.getenv("DGX_LAB_MEMORY_TOTAL_GB", "128"))
 MEMORY_BANDWIDTH_MAX_GBS = float(os.getenv("DGX_LAB_MEMORY_BW_MAX_GBS", "273"))

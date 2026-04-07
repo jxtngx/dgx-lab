@@ -14,6 +14,7 @@ interface UserInfo {
 const OPTIONAL_TOOLS = [
   { key: "agent-viewer", label: "Cursor Traces" },
   { key: "claude-traces", label: "Claude Traces" },
+  { key: "langsmith-traces", label: "LangSmith Traces" },
 ] as const
 
 function getInitials(name: string): string {

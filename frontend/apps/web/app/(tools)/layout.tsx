@@ -28,6 +28,7 @@ const toolNames: Record<string, string> = {
   "/monitor": "Monitor",
   "/agents": "Cursor Traces",
   "/claude-traces": "Claude Traces",
+  "/langsmith": "LangSmith Traces",
 }
 
 export default function ToolsLayout({ children }: { children: React.ReactNode }) {

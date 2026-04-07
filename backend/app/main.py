@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.logging_config import PollFilter
-from app.routers import agents, automodel, claude_agents, control, curator, datasets, designer, logger, monitor, traces
+from app.routers import agent_chat, agents, automodel, claude_agents, control, curator, datasets, designer, langsmith_traces, logger, monitor, traces
 
 
 @asynccontextmanager
@@ -39,6 +39,8 @@ app.include_router(automodel.router, prefix="/api/automodel", tags=["automodel"]
 app.include_router(datasets.router, prefix="/api/datasets", tags=["datasets"])
 app.include_router(agents.router, prefix="/api/agents", tags=["agents"])
 app.include_router(claude_agents.router, prefix="/api/claude-agents", tags=["claude-agents"])
+app.include_router(langsmith_traces.router, prefix="/api/langsmith", tags=["langsmith"])
+app.include_router(agent_chat.router, prefix="/api/agent", tags=["agent"])
 
 
 @app.get("/api/health")

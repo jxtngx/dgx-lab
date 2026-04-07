@@ -36,12 +36,14 @@ const sections: { title: string; items: SidebarItem[] }[] = [
       { href: "/traces", label: "Traces", icon: "⬡" },
       { href: "/agents", label: "Cursor Traces", icon: "◎", optional: true, settingsKey: "agent-viewer" },
       { href: "/claude-traces", label: "Claude Traces", icon: "◎", optional: true, settingsKey: "claude-traces" },
+      { href: "/langsmith", label: "LangSmith", icon: "◎", optional: true, settingsKey: "langsmith-traces" },
     ],
   },
   {
     title: "System",
     items: [
       { href: "/monitor", label: "Monitor", icon: "◉" },
+      { href: "/docs", label: "Docs", icon: "⎘" },
     ],
   },
 ]
