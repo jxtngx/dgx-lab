@@ -41,11 +41,11 @@ jobs:
         uses: oven-sh/setup-bun@v2
 
       - name: Install docs-site dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
         working-directory: docs-site
 
       - name: Install frontend dependencies
-        run: bun install --frozen-lockfile
+        run: bun install
         working-directory: frontend
 
       - name: Generate frontend docs
