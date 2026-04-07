@@ -120,3 +120,5 @@ backend/
 - [GOFAI Engineer](.cursor/agents/gofai-engineer.md)
 - [Designer](.cursor/agents/designer.md)
 - [Scrum Master](.cursor/agents/scrum-master.md)
+- [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
+- [macOS Expert](.cursor/agents/macos-expert.md)

@@ -107,6 +107,8 @@ graph TD
 | Technical Writer | README, guides, docstrings, changelogs, UI copy review | `technical-writer.md` |
 | Developer Advocate | Onboarding, troubleshooting, architecture explanation for external users | `developer-advocate.md` |
 | Scrum Master | Sprint ceremonies, backlog health, flow and velocity, blocker removal | `scrum-master.md` |
+| DGX Spark Expert | Spark hardware, GB10 architecture, unified memory, CUDA, system diagnostics | `dgx-spark-expert.md` |
+| macOS Expert | Apple Silicon M5 Max, macOS tooling, Mac-to-Spark connectivity | `macos-expert.md` |
 
 ## Responsibilities
 
@@ -163,6 +165,8 @@ When delegating work:
 - **Tailscale Engineer:** Networking topology needs Architect awareness for security and access patterns.
 - **Technical Writer:** Architecture docs and README accuracy. Architect is the source of truth; Writer is the voice.
 - **Scrum Master:** Priority alignment, cross-cutting work sequencing, blocker escalation. Architect owns what gets built; Scrum Master owns how work flows.
+- **DGX Spark Expert:** Hardware constraints that feed architecture decisions. Memory budgets, bandwidth ceilings, and CUDA capabilities shape every tool.
+- **macOS Expert:** Mac-side developer environment, Mac-to-Spark connectivity patterns, browser/client considerations.
 
 ## Related
 
@@ -177,3 +181,5 @@ When delegating work:
 - [Technical Writer](.cursor/agents/technical-writer.md)
 - [Developer Advocate](.cursor/agents/developer-advocate.md)
 - [Scrum Master](.cursor/agents/scrum-master.md)
+- [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
+- [macOS Expert](.cursor/agents/macos-expert.md)

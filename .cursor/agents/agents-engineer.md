@@ -124,3 +124,5 @@ Always read the relevant skill before writing code. The skills contain the curre
 - [AWS Engineer](.cursor/agents/aws-engineer.md)
 - [Designer](.cursor/agents/designer.md)
 - [Scrum Master](.cursor/agents/scrum-master.md)
+- [DGX Spark Expert](.cursor/agents/dgx-spark-expert.md)
+- [macOS Expert](.cursor/agents/macos-expert.md)
