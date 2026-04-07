@@ -184,13 +184,16 @@ dgx-lab/
 
 ## Maintainer tooling
 
-DGX Lab is built and maintained with [Cursor](https://cursor.com/) and [Anthropic](https://anthropic.com/) Claude as core development agents. The `.cursor/agents/` directory contains 12 specialized agent definitions (Chief Architect, Scrum Master, Designer, Backend Engineer, AI Engineer, ML Engineer, Agents Engineer, GOFAI Engineer, AWS Engineer, Tailscale Engineer, Technical Writer, Developer Advocate) that encode project conventions, subsystem boundaries, and the DGX Lab design system. They are the persistent context that keeps contributions aligned without a style guide someone has to remember to read. The Developer Advocate agent is there to help anyone who clones or forks the repo get oriented, troubleshoot setup, and understand the architecture well enough to work independently.
+DGX Lab is built and maintained with [Cursor](https://cursor.com/) and [Anthropic](https://anthropic.com/) Claude as core development agents. The `.cursor/agents/` directory contains 14 specialized agent definitions (Chief Architect, Scrum Master, Designer, Backend Engineer, AI Engineer, ML Engineer, Agents Engineer, GOFAI Engineer, AWS Engineer, Tailscale Engineer, Technical Writer, Developer Advocate, DGX Spark Expert, macOS Expert) that encode project conventions, subsystem boundaries, and the DGX Lab design system. They are the persistent context that keeps contributions aligned without a style guide someone has to remember to read. The Developer Advocate agent is there to help anyone who clones or forks the repo get oriented, troubleshoot setup, and understand the architecture well enough to work independently.
 
 ## Resources
 
 - [NVIDIA DGX Spark — build.nvidia.com](https://build.nvidia.com/spark)
 - [DGX Spark User Guide](https://docs.nvidia.com/dgx/dgx-spark/)
 - [NVIDIA NeMo Framework](https://docs.nvidia.com/nemo-framework/user-guide/latest/overview.html)
+- [LangChain Documentation](https://python.langchain.com/docs/)
+- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
+- [LangSmith Documentation](https://docs.smith.langchain.com/)
 
 ## License
 
