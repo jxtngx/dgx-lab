@@ -1,19 +1,3 @@
-"""Helpers for surfacing Cursor model usage data.
-
-Cursor stores model/usage info in two places that are *not* the agent-transcript
-JSONLs we render in the timeline:
-
-* ``~/.cursor/chats/<workspace_hash>/<agent_id>/store.db`` — one SQLite per
-  Composer/Agent session. The ``meta`` row (hex-encoded JSON) carries
-  ``agentId``, ``name``, ``mode`` (plan/agent/default), ``lastUsedModel``,
-  and ``createdAt``. The workspace hash is ``md5(<absolute_workspace_path>)``.
-
-* ``~/.cursor/ai-tracking/ai-code-tracking.db`` — global SQLite tracking every
-  AI-generated code hash, file write, and delete, tagged with ``model`` and
-  ``conversationId`` (which matches the chats agent_id).
-
-This module exposes pure read-only helpers; the FastAPI router composes them.
-"""
 from __future__ import annotations
 
 import hashlib
@@ -25,10 +9,6 @@ from collections import Counter
 from app import config
 
 
-# Cursor stores per-message model attribution as JSON embedded inside the
-# protobuf blobs, e.g. ``{"cursor":{"modelName":"claude-4.6-opus-max-thinking"}}``.
-# We pull every JSON-string value sitting under one of these keys; that gives us
-# the exact model identifier per request, with no protobuf-tag guesswork.
 _MODEL_KEY_RE = re.compile(
     rb'"(modelName|displayModelName|model|modelId|composerModel|requestedModel)"\s*:\s*"([^"\\]{1,80})"'
 )
@@ -39,13 +19,6 @@ def _path_to_slug(path: str) -> str:
 
 
 def _scan_chat_workspace_paths() -> dict[str, str]:
-    """Discover ``workspace_hash -> absolute workspace path`` from chats store.
-
-    Cursor's slug is lossy (``home-jxtngx-Desktop-dgx-lab`` could map to
-    ``/home/jxtngx/Desktop/dgx-lab`` *or* ``/home/jxtngx/Desktop/dgx/lab``), so
-    we crack the workspace path from any ``currentPlanUri`` we find inside a
-    chat's ``store.db``. Falls back gracefully when nothing is available.
-    """
     root = config.CURSOR_CHATS_ROOT
     mapping: dict[str, str] = {}
     if not root.is_dir():
@@ -78,14 +51,7 @@ def _scan_chat_workspace_paths() -> dict[str, str]:
 
 
 def workspace_hash_for_slug(slug: str) -> str:
-    """Resolve a Cursor project slug back into the md5 workspace hash.
 
-    Slugs in ``~/.cursor/projects`` look like ``home-jxtngx-Desktop-dgx-lab``;
-    Cursor's chat store keys those workspaces by ``md5(<absolute_path>)``. We
-    prefer hashes discovered from chat metadata (since the slug is lossy when
-    a directory name itself contains ``-``), then fall back to the local
-    workspace path for the default project, then a naive guess.
-    """
     if slug == config.DEFAULT_CURSOR_PROJECT_SLUG:
         return hashlib.md5(str(config._REPO_ROOT).encode()).hexdigest()
 
@@ -165,20 +131,6 @@ def _length_prefixed_strings(data: bytes):
 
 
 def _scan_blob_for_models(data: bytes, sink: Counter) -> None:
-    """Extract model identifiers from one blob, no name filtering.
-
-    Two sources are combined:
-
-    * JSON values: Cursor embeds JSON metadata such as
-      ``{"modelName": "claude-4.6-opus-max-thinking"}`` inside the protobuf
-      blob. We pull every value sitting under one of the model-name keys.
-
-    * Protobuf field: the same identifier also appears as a raw protobuf
-      length-prefixed string. Once we've seen a model value via JSON we know
-      which protobuf tag byte holds it, so we harvest every other value in
-      that field too -- this surfaces identifiers that aren't wrapped in the
-      JSON envelope.
-    """
     if not data:
         return
 
@@ -209,11 +161,7 @@ def _scan_blob_for_models(data: bytes, sink: Counter) -> None:
 
 
 def model_message_counts_for_store(store_path) -> Counter:
-    """Aggregate per-message model attribution across every blob in a chat store.
 
-    Each occurrence (~one per assistant turn or tool result, depending on
-    Cursor's schema) is counted. Returns a Counter of model_name -> count.
-    """
     counts: Counter = Counter()
     if not store_path.is_file():
         return counts
@@ -240,12 +188,7 @@ def list_chat_agents(
     *,
     include_blob_models: bool = False,
 ) -> list[dict]:
-    """Return one entry per ``store.db`` under the given workspace hash.
 
-    When ``include_blob_models=True`` each entry gets a ``message_models`` map
-    derived from scanning the agent's blobs, plus ``message_count`` and
-    ``primary_model`` (most-used model in the session).
-    """
     root = config.CURSOR_CHATS_ROOT / workspace_hash
     if not root.is_dir():
         return []
@@ -309,11 +252,7 @@ def _empty_model_stats() -> dict:
 
 
 def model_stats_for_agents(agent_ids: list[str] | None) -> dict:
-    """Aggregate ``ai-code-tracking.db`` rows for the given conversation IDs.
 
-    Pass ``agent_ids=None`` to aggregate across every conversation in the
-    tracking database.
-    """
     db_path = config.CURSOR_AI_TRACKING_DB
     if not db_path.is_file():
         return _empty_model_stats()
