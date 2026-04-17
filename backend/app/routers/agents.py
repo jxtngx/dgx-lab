@@ -4,15 +4,43 @@ import json
 from collections import Counter
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
-from app import config
+from app import config, cursor_chats
 
 router = APIRouter()
 
 
-def _transcript_path(conversation_id: str) -> Path:
-    return config.AGENT_TRANSCRIPTS_DIR / conversation_id / f"{conversation_id}.jsonl"
+def _resolve_project_dir(project: str | None) -> Path:
+    if config.AGENT_TRANSCRIPTS_DIR_OVERRIDE:
+        return Path(config.AGENT_TRANSCRIPTS_DIR_OVERRIDE)
+
+    root = config.CURSOR_PROJECTS_ROOT
+    if project:
+        return root / project / "agent-transcripts"
+
+    default = root / config.DEFAULT_CURSOR_PROJECT_SLUG / "agent-transcripts"
+    if default.is_dir():
+        return default
+
+    if root.is_dir():
+        candidates: list[tuple[float, Path]] = []
+        for entry in root.iterdir():
+            sub = entry / "agent-transcripts"
+            if sub.is_dir():
+                try:
+                    candidates.append((sub.stat().st_mtime, sub))
+                except OSError:
+                    continue
+        if candidates:
+            candidates.sort(key=lambda t: t[0], reverse=True)
+            return candidates[0][1]
+
+    return default
+
+
+def _transcript_path(base: Path, conversation_id: str) -> Path:
+    return base / conversation_id / f"{conversation_id}.jsonl"
 
 
 def _parse_jsonl(path: Path) -> list[dict]:
@@ -63,13 +91,65 @@ def _first_user_message(turns: list[dict]) -> str:
     return "Untitled conversation"
 
 
-def _subagent_dir(conversation_id: str) -> Path:
-    return config.AGENT_TRANSCRIPTS_DIR / conversation_id / "subagents"
+def _subagent_dir(base: Path, conversation_id: str) -> Path:
+    return base / conversation_id / "subagents"
+
+
+def _slug_to_display_path(slug: str) -> str:
+    return "/" + slug.replace("-", "/")
+
+
+def _count_conversations(transcripts_dir: Path) -> int:
+    if not transcripts_dir.is_dir():
+        return 0
+    count = 0
+    for entry in transcripts_dir.iterdir():
+        if not entry.is_dir():
+            continue
+        if (entry / f"{entry.name}.jsonl").exists():
+            count += 1
+    return count
+
+
+@router.get("/projects")
+async def list_projects():
+    if config.AGENT_TRANSCRIPTS_DIR_OVERRIDE:
+        return {"projects": [], "default_slug": None, "override": True}
+
+    root = config.CURSOR_PROJECTS_ROOT
+    if not root.is_dir():
+        return {"projects": [], "default_slug": config.DEFAULT_CURSOR_PROJECT_SLUG, "override": False}
+
+    projects: list[dict] = []
+    for entry in root.iterdir():
+        if not entry.is_dir():
+            continue
+        transcripts = entry / "agent-transcripts"
+        if not transcripts.is_dir():
+            continue
+        try:
+            mtime = transcripts.stat().st_mtime
+        except OSError:
+            continue
+        projects.append({
+            "slug": entry.name,
+            "display_path": _slug_to_display_path(entry.name),
+            "conversation_count": _count_conversations(transcripts),
+            "modified_at": mtime,
+            "is_default": entry.name == config.DEFAULT_CURSOR_PROJECT_SLUG,
+        })
+
+    projects.sort(key=lambda p: p["modified_at"], reverse=True)
+    return {
+        "projects": projects,
+        "default_slug": config.DEFAULT_CURSOR_PROJECT_SLUG,
+        "override": False,
+    }
 
 
 @router.get("/conversations")
-async def list_conversations():
-    base = config.AGENT_TRANSCRIPTS_DIR
+async def list_conversations(project: str | None = Query(None)):
+    base = _resolve_project_dir(project)
     if not base.exists():
         return {"conversations": []}
 
@@ -109,8 +189,9 @@ async def list_conversations():
 
 
 @router.get("/conversations/{conversation_id}")
-async def get_conversation(conversation_id: str):
-    path = _transcript_path(conversation_id)
+async def get_conversation(conversation_id: str, project: str | None = Query(None)):
+    base = _resolve_project_dir(project)
+    path = _transcript_path(base, conversation_id)
     if not path.exists():
         raise HTTPException(status_code=404, detail="Conversation not found")
 
@@ -142,8 +223,9 @@ async def get_conversation(conversation_id: str):
 
 
 @router.get("/conversations/{conversation_id}/subagents")
-async def list_subagents(conversation_id: str):
-    sub_dir = _subagent_dir(conversation_id)
+async def list_subagents(conversation_id: str, project: str | None = Query(None)):
+    base = _resolve_project_dir(project)
+    sub_dir = _subagent_dir(base, conversation_id)
     if not sub_dir.exists():
         return {"subagents": []}
 
@@ -161,8 +243,9 @@ async def list_subagents(conversation_id: str):
 
 
 @router.get("/conversations/{conversation_id}/subagents/{subagent_id}")
-async def get_subagent(conversation_id: str, subagent_id: str):
-    sub_dir = _subagent_dir(conversation_id)
+async def get_subagent(conversation_id: str, subagent_id: str, project: str | None = Query(None)):
+    base = _resolve_project_dir(project)
+    sub_dir = _subagent_dir(base, conversation_id)
     path = sub_dir / f"{subagent_id}.jsonl"
     if not path.exists():
         raise HTTPException(status_code=404, detail="Subagent transcript not found")
@@ -182,9 +265,74 @@ async def get_subagent(conversation_id: str, subagent_id: str):
     return {"subagent_id": subagent_id, "turns": turns}
 
 
+@router.get("/model-usage")
+async def model_usage(
+    project: str | None = Query(None),
+    conversation_id: str | None = Query(None),
+):
+    """Aggregate Cursor model usage for a project (or a single conversation).
+
+    Joins two Cursor stores that live outside the agent-transcripts directory:
+    ``~/.cursor/chats/<workspace_hash>/<agent_id>/store.db`` for per-agent
+    metadata, and ``~/.cursor/ai-tracking/ai-code-tracking.db`` for code-hash
+    aggregates. The workspace hash is derived from the project slug
+    (md5 of the absolute repo path), so this only resolves when a project is
+    selected; when ``DGX_LAB_AGENT_TRANSCRIPTS_DIR`` is overridden we still
+    return global tracking totals so the UI has something to show.
+    """
+    if config.AGENT_TRANSCRIPTS_DIR_OVERRIDE and not project:
+        global_stats = cursor_chats.model_stats_for_agents(None)
+        return {
+            "scope": "global",
+            "workspace_hash": None,
+            "agents": [],
+            "agent_match": None,
+            **global_stats,
+        }
+
+    project_slug = project or config.DEFAULT_CURSOR_PROJECT_SLUG
+    workspace_hash = cursor_chats.workspace_hash_for_slug(project_slug)
+    agents = cursor_chats.list_chat_agents(workspace_hash, include_blob_models=True)
+    agent_ids = [a["agent_id"] for a in agents if a.get("agent_id")]
+
+    by_model_messages: dict[str, int] = {}
+    for a in agents:
+        for model, count in (a.get("message_models") or {}).items():
+            by_model_messages[model] = by_model_messages.get(model, 0) + count
+    total_messages = sum(by_model_messages.values())
+
+    if conversation_id:
+        # Per-conversation drill-down. Only useful when the agent-transcript UUID
+        # actually matches a chats agentId (older transcripts won't match).
+        match = next((a for a in agents if a.get("agent_id") == conversation_id), None)
+        per_agent = cursor_chats.model_stats_for_agents([conversation_id])
+        agent_message_models = match.get("message_models") if match else {}
+        return {
+            "scope": "conversation",
+            "workspace_hash": workspace_hash,
+            "agents": agents,
+            "agent_match": match,
+            "extension_breakdown": cursor_chats.conversation_extension_breakdown(conversation_id),
+            "by_model_messages": agent_message_models or {},
+            "total_messages": sum((agent_message_models or {}).values()),
+            **per_agent,
+        }
+
+    project_stats = cursor_chats.model_stats_for_agents(agent_ids)
+    return {
+        "scope": "project",
+        "workspace_hash": workspace_hash,
+        "agents": agents,
+        "agent_match": None,
+        "by_model_messages": by_model_messages,
+        "total_messages": total_messages,
+        **project_stats,
+    }
+
+
 @router.get("/stats")
-async def get_stats():
-    base = config.AGENT_TRANSCRIPTS_DIR
+async def get_stats(project: str | None = Query(None)):
+    base = _resolve_project_dir(project)
     if not base.exists():
         return {
             "total_conversations": 0,

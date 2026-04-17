@@ -34,13 +34,6 @@ interface SubagentSummary {
   size_bytes: number
 }
 
-interface StatsResponse {
-  total_conversations: number
-  total_messages: number
-  total_tool_calls: number
-  tool_frequency: Record<string, number>
-}
-
 function CollapsibleSection({
   title,
   badge,
@@ -83,7 +76,9 @@ export function MessageTimeline({
   subagents,
   selectedSubagentId,
   onSelectSubagent,
-  stats,
+  modelLabel,
+  modelColor,
+  modeLabel,
 }: {
   turns: Turn[]
   selectedTurn: Turn | null
@@ -96,7 +91,9 @@ export function MessageTimeline({
   subagents?: SubagentSummary[]
   selectedSubagentId?: string | null
   onSelectSubagent?: (id: string) => void
-  stats?: StatsResponse | null
+  modelLabel?: string | null
+  modelColor?: string
+  modeLabel?: string | null
 }) {
   const getToolColor = toolColorFn ?? ((name: string) => TOOL_COLORS[name] ?? "#8b8993")
 
@@ -143,6 +140,19 @@ export function MessageTimeline({
               {subs.length}
             </span>
           )}
+          {modelLabel && (
+            <span
+              className="rounded px-1.5 py-0.5 text-[9.5px]"
+              style={{
+                backgroundColor: `${modelColor ?? "#8b8993"}22`,
+                color: modelColor ?? "#8b8993",
+              }}
+              title={modelLabel}
+            >
+              {modelLabel}
+              {modeLabel ? ` · ${modeLabel}` : ""}
+            </span>
+          )}
         </div>
       </div>
 
@@ -171,23 +181,6 @@ export function MessageTimeline({
               )
             })}
           </div>
-
-          {stats && (
-            <div className="mt-2 grid grid-cols-3 gap-1">
-              {([
-                ["Conversations", stats.total_conversations],
-                ["Messages", stats.total_messages],
-                ["Tool Calls", stats.total_tool_calls],
-              ] as const).map(([label, value]) => (
-                <div key={label} className="rounded bg-elevated px-2 py-1.5">
-                  <div className="text-[9px] text-text-tertiary">{label}</div>
-                  <div className="mt-0.5 text-[11px] text-foreground">
-                    {typeof value === "number" ? value.toLocaleString() : value}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </CollapsibleSection>
       )}
 

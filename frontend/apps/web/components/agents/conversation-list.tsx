@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react"
 import { cn } from "@workspace/ui/lib/utils"
 import { ScrollArea } from "@workspace/ui/components/scroll-area"
+import { ProjectSelector, type ProjectSummary } from "@/components/agents/project-selector"
 
 interface ConversationSummary {
   id: string
@@ -30,12 +31,22 @@ export function ConversationList({
   onSelect,
   loading,
   onRefresh,
+  projects,
+  selectedProject,
+  onSelectProject,
+  projectsLoading,
+  onClearSelection,
 }: {
   conversations: ConversationSummary[]
   selectedId: string | null
   onSelect: (id: string) => void
   loading?: boolean
   onRefresh?: () => void
+  projects?: ProjectSummary[]
+  selectedProject?: string | null
+  onSelectProject?: (slug: string) => void
+  projectsLoading?: boolean
+  onClearSelection?: () => void
 }) {
   const [search, setSearch] = useState("")
 
@@ -45,15 +56,52 @@ export function ConversationList({
     return conversations.filter((c) => c.title.toLowerCase().includes(q))
   }, [conversations, search])
 
+  const showPicker = !!projects && projects.length > 0 && !!onSelectProject
+
   return (
     <div className="flex h-full flex-col">
       <div className="shrink-0 px-3 pt-3 pb-2">
-        <h2 className="text-[13px] font-semibold text-foreground">
-          Conversations{" "}
-          <span className="font-normal text-text-tertiary">
-            · {conversations.length}
-          </span>
-        </h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-[13px] font-semibold text-foreground">
+            Conversations{" "}
+            <span className="font-normal text-text-tertiary">
+              · {conversations.length}
+            </span>
+          </h2>
+          {selectedId && onClearSelection && (
+            <button
+              type="button"
+              onClick={onClearSelection}
+              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md transition-colors hover:bg-elevated"
+              style={{
+                color: "var(--text-tertiary)",
+                border: "1px solid var(--border-subtle)",
+              }}
+              title="Back to project overview"
+              aria-label="Back to project overview"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path
+                  d="M3 12l9-9 9 9M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
+        {showPicker && (
+          <div className="mt-2">
+            <ProjectSelector
+              projects={projects ?? []}
+              selectedSlug={selectedProject ?? null}
+              onSelect={onSelectProject!}
+              loading={projectsLoading}
+            />
+          </div>
+        )}
         <div className="mt-2 flex items-center gap-1.5">
           <input
             value={search}
@@ -90,13 +138,22 @@ export function ConversationList({
             </div>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-20 text-xs text-text-tertiary">
-              <p>No conversations found.</p>
-              <p>
-                Cursor transcripts live in{" "}
-                <code className="rounded bg-elevated px-1 font-mono">
-                  agent-transcripts/
-                </code>
-              </p>
+              {showPicker ? (
+                <>
+                  <p>No conversations in this project yet.</p>
+                  <p>Pick another project from the selector above.</p>
+                </>
+              ) : (
+                <>
+                  <p>No conversations found.</p>
+                  <p>
+                    Cursor transcripts live in{" "}
+                    <code className="rounded bg-elevated px-1 font-mono">
+                      agent-transcripts/
+                    </code>
+                  </p>
+                </>
+              )}
             </div>
           ) : (
             <div className="space-y-0.5">
