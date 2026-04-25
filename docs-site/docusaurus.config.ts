@@ -22,9 +22,10 @@ const config: Config = {
 
   markdown: {
     mermaid: true,
+    format: 'detect',
   },
 
-  themes: ['@docusaurus/theme-mermaid'],
+  // themes: ['@docusaurus/theme-mermaid'],
 
   i18n: {
     defaultLocale: 'en',
