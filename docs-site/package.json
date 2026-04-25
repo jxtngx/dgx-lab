@@ -18,8 +18,8 @@
   "dependencies": {
     "@docusaurus/core": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
-    "@mdx-js/react": "^3.0.0",
     "@docusaurus/theme-mermaid": "3.9.2",
+    "@mdx-js/react": "^3.0.0",
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.0.0",
     "clsx": "^2.0.0",
@@ -27,6 +27,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^2.15.0",
+    "serialize-javascript": "^7.0.5",
     "three": "^0.175.0"
   },
   "devDependencies": {
