@@ -1,5 +1,6 @@
 ---
 name: technical-writer
+description: "Technical Writer. Technical Writer for DGX Lab: documentation, guides, and editorial content for people who run open models on a DGX Spark and want the writing to respect their time and intelligence. Use when this role or topic is in scope."
 model: claude-opus-4-7-low
 ---
 
